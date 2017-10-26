@@ -10,18 +10,7 @@ const AppQuery = graphql`
   query AppContainerQuery {
     viewer {
       id
-      allCats(last: 3) {
-        edges {
-          cursor
-          node {
-            id
-            fullName
-            nickname
-            imageUrl
-            isShwifty
-          }
-        }
-      }
+      ...CatList_viewer
     }
   }
 `;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 9b97c33b979e4b66c737aa84e09f1609
+ * @relayHash 33d4712097b422c1d97290c998e48760
  */
 
 /* eslint-disable */
@@ -12,18 +12,6 @@ import type {ConcreteBatch} from 'relay-runtime';
 export type AppContainerQueryResponse = {|
   +viewer: {|
     +id: string;
-    +allCats: {|
-      +edges: ?$ReadOnlyArray<?{|
-        +cursor: string;
-        +node: {|
-          +id: string;
-          +fullName: ?string;
-          +nickname: string;
-          +imageUrl: string;
-          +isShwifty: ?boolean;
-        |};
-      |}>;
-    |};
   |};
 |};
 */
@@ -33,19 +21,28 @@ export type AppContainerQueryResponse = {|
 query AppContainerQuery {
   viewer {
     id
-    allCats(last: 3) {
-      edges {
-        cursor
-        node {
-          id
-          fullName
-          nickname
-          imageUrl
-          isShwifty
-        }
+    ...CatList_viewer
+  }
+}
+
+fragment CatList_viewer on Viewer {
+  allCats {
+    edges {
+      cursor
+      node {
+        ...CatContainer_cat
+        id
       }
     }
   }
+}
+
+fragment CatContainer_cat on Cat {
+  id
+  nickname
+  fullName
+  imageUrl
+  isShwifty
 }
 */
 
@@ -72,86 +69,9 @@ const batch /*: ConcreteBatch*/ = {
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "last",
-                "value": 3,
-                "type": "Int"
-              }
-            ],
-            "concreteType": "CatConnection",
-            "name": "allCats",
-            "plural": false,
-            "selections": [
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "args": null,
-                "concreteType": "CatEdge",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "cursor",
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Cat",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "id",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "fullName",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "nickname",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "imageUrl",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "isShwifty",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "allCats{\"last\":3}"
+            "kind": "FragmentSpread",
+            "name": "CatList_viewer",
+            "args": null
           }
         ],
         "storageKey": null
@@ -185,76 +105,82 @@ const batch /*: ConcreteBatch*/ = {
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "last",
-                "value": 3,
-                "type": "Int"
-              }
-            ],
-            "concreteType": "CatConnection",
-            "name": "allCats",
-            "plural": false,
+            "kind": "InlineFragment",
+            "type": "Viewer",
             "selections": [
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "args": null,
-                "concreteType": "CatEdge",
-                "name": "edges",
-                "plural": true,
+                "concreteType": "CatConnection",
+                "name": "allCats",
+                "plural": false,
                 "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "args": null,
-                    "name": "cursor",
-                    "storageKey": null
-                  },
                   {
                     "kind": "LinkedField",
                     "alias": null,
                     "args": null,
-                    "concreteType": "Cat",
-                    "name": "node",
-                    "plural": false,
+                    "concreteType": "CatEdge",
+                    "name": "edges",
+                    "plural": true,
                     "selections": [
                       {
                         "kind": "ScalarField",
                         "alias": null,
                         "args": null,
-                        "name": "id",
+                        "name": "cursor",
                         "storageKey": null
                       },
                       {
-                        "kind": "ScalarField",
+                        "kind": "LinkedField",
                         "alias": null,
                         "args": null,
-                        "name": "fullName",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "nickname",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "imageUrl",
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "args": null,
-                        "name": "isShwifty",
+                        "concreteType": "Cat",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "kind": "ScalarField",
+                            "alias": null,
+                            "args": null,
+                            "name": "id",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "type": "Cat",
+                            "selections": [
+                              {
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "args": null,
+                                "name": "nickname",
+                                "storageKey": null
+                              },
+                              {
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "args": null,
+                                "name": "fullName",
+                                "storageKey": null
+                              },
+                              {
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "args": null,
+                                "name": "imageUrl",
+                                "storageKey": null
+                              },
+                              {
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "args": null,
+                                "name": "isShwifty",
+                                "storageKey": null
+                              }
+                            ]
+                          }
+                        ],
                         "storageKey": null
                       }
                     ],
@@ -263,15 +189,14 @@ const batch /*: ConcreteBatch*/ = {
                 ],
                 "storageKey": null
               }
-            ],
-            "storageKey": "allCats{\"last\":3}"
+            ]
           }
         ],
         "storageKey": null
       }
     ]
   },
-  "text": "query AppContainerQuery {\n  viewer {\n    id\n    allCats(last: 3) {\n      edges {\n        cursor\n        node {\n          id\n          fullName\n          nickname\n          imageUrl\n          isShwifty\n        }\n      }\n    }\n  }\n}\n"
+  "text": "query AppContainerQuery {\n  viewer {\n    id\n    ...CatList_viewer\n  }\n}\n\nfragment CatList_viewer on Viewer {\n  allCats {\n    edges {\n      cursor\n      node {\n        ...CatContainer_cat\n        id\n      }\n    }\n  }\n}\n\nfragment CatContainer_cat on Cat {\n  id\n  nickname\n  fullName\n  imageUrl\n  isShwifty\n}\n"
 };
 
 module.exports = batch;
