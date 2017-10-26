@@ -5,13 +5,14 @@ import { createFragmentContainer, graphql } from 'react-relay';
 import Cat from './Cat';
 
 import updateCat from '../mutations/updateCat';
+import deleteCat from '../mutations/deleteCat';
 
 class CatContainer extends PureComponent {
   toggleShwifty = () => {
     updateCat(this.props.cat.id, !this.props.cat.isShwifty);
   };
   handleDelete = () => {
-    // we will add delete mutation here
+    deleteCat(this.props.cat.id);
   };
   render() {
     return (
