@@ -14,20 +14,35 @@ export type CatList_viewer = {|
       +cursor: string;
       +node: {| |};
     |}>;
+    +pageInfo: {|
+      +hasNextPage: boolean;
+      +endCursor: ?string;
+    |};
   |};
 |};
 */
 
 
 const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "RootArgument",
+      "name": "count",
+      "type": "Int"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "cursor",
+      "type": "String"
+    }
+  ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": null,
-        "cursor": null,
-        "direction": "backward",
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
         "path": [
           "allCats"
         ]
@@ -79,6 +94,31 @@ const fragment /*: ConcreteFragment*/ = {
           "storageKey": null
         },
         {
+          "kind": "LinkedField",
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
+              "name": "hasNextPage",
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
+              "name": "endCursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "kind": "InlineFragment",
           "type": "CatConnection",
           "selections": [
@@ -106,31 +146,6 @@ const fragment /*: ConcreteFragment*/ = {
                       "storageKey": null
                     }
                   ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "kind": "LinkedField",
-              "alias": null,
-              "args": null,
-              "concreteType": "PageInfo",
-              "name": "pageInfo",
-              "plural": false,
-              "selections": [
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "args": null,
-                  "name": "hasPreviousPage",
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "args": null,
-                  "name": "startCursor",
                   "storageKey": null
                 }
               ],

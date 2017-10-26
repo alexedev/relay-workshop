@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { createFragmentContainer, graphql } from 'react-relay';
+import { createPaginationContainer, graphql } from 'react-relay';
 
 import CatContainer from './CatContainer';
 
@@ -8,7 +8,10 @@ import get from 'lodash/get';
 
 class CatList extends PureComponent {
   loadMore = () => {
-    // we will add pagination callback here
+    if (!this.props.relay.hasMore() || this.props.relay.isLoading()) {
+      return;
+    }
+    this.props.relay.loadMore(1);
   };
   render() {
     return (
@@ -28,18 +31,49 @@ class CatList extends PureComponent {
   }
 }
 
-export default createFragmentContainer(
+export default createPaginationContainer(
   CatList,
   graphql`
     fragment CatList_viewer on Viewer {
-      allCats(last: 4) @connection(key: "CatList_allCats") {
+      allCats(first: $count, after: $cursor)
+        @connection(key: "CatList_allCats") {
         edges {
           cursor
           node {
             ...CatContainer_cat
           }
         }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
       }
     }
-  `
+  `,
+  {
+    direction: 'forward',
+    getConnectionFromProps(props) {
+      return props.viewer && props.viewer.allCats;
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      return {
+        ...prevVars,
+        count: totalCount
+      };
+    },
+    getVariables(props, { count, cursor }) {
+      return {
+        count,
+        cursor
+      };
+    },
+    query: graphql`
+      query CatListPaginationQuery($count: Int!, $cursor: String) {
+        viewer {
+          id
+          ...CatList_viewer
+        }
+      }
+    `
+  }
 );
