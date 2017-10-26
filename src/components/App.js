@@ -8,7 +8,7 @@ const App = ({ viewer }) => (
     <h1 className="mw6 ">Cat Hotel Manager</h1>
     <h3 className="mt5">Current residents</h3>
     <CatList viewer={viewer} />
-    <CreateFormContainer />
+    <CreateFormContainer viewerId={viewer.id} />
   </div>
 );
 

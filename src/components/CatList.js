@@ -32,7 +32,7 @@ export default createFragmentContainer(
   CatList,
   graphql`
     fragment CatList_viewer on Viewer {
-      allCats {
+      allCats(last: 4) @connection(key: "CatList_allCats") {
         edges {
           cursor
           node {

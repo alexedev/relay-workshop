@@ -22,15 +22,26 @@ export type CatList_viewer = {|
 const fragment /*: ConcreteFragment*/ = {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "backward",
+        "path": [
+          "allCats"
+        ]
+      }
+    ]
+  },
   "name": "CatList_viewer",
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": null,
+      "alias": "allCats",
       "args": null,
       "concreteType": "CatConnection",
-      "name": "allCats",
+      "name": "__CatList_allCats_connection",
       "plural": false,
       "selections": [
         {
@@ -66,6 +77,66 @@ const fragment /*: ConcreteFragment*/ = {
             }
           ],
           "storageKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "type": "CatConnection",
+          "selections": [
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "args": null,
+              "concreteType": "CatEdge",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Cat",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "args": null,
+                      "name": "__typename",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "args": null,
+              "concreteType": "PageInfo",
+              "name": "pageInfo",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "args": null,
+                  "name": "hasPreviousPage",
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "args": null,
+                  "name": "startCursor",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
