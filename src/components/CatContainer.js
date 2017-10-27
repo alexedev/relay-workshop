@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+import { createFragmentContainer, graphql } from 'react-relay';
+
 import Cat from './Cat';
 
 class CatContainer extends PureComponent {
@@ -20,4 +22,15 @@ class CatContainer extends PureComponent {
   }
 }
 
-export default CatContainer;
+export default createFragmentContainer(
+  CatContainer,
+  graphql`
+    fragment CatContainer_cat on Cat {
+      id
+      fullName
+      imageUrl
+      nickname
+      isShwifty
+    }
+  `
+);

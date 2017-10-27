@@ -11,13 +11,7 @@ import type {ConcreteFragment} from 'relay-runtime';
 export type CatList_list = {|
   +edges: ?$ReadOnlyArray<?{|
     +cursor: string;
-    +node: {|
-      +id: string;
-      +fullName: ?string;
-      +nickname: string;
-      +imageUrl: string;
-      +isShwifty: ?boolean;
-    |};
+    +node: {| |};
   |}>;
 |};
 */
@@ -53,39 +47,9 @@ const fragment /*: ConcreteFragment*/ = {
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "id",
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "fullName",
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "nickname",
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "imageUrl",
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "args": null,
-              "name": "isShwifty",
-              "storageKey": null
+              "kind": "FragmentSpread",
+              "name": "CatContainer_cat",
+              "args": null
             }
           ],
           "storageKey": null

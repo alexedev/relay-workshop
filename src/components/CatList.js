@@ -35,11 +35,7 @@ export default createFragmentContainer(
       edges {
         cursor
         node {
-          id
-          fullName
-          nickname
-          imageUrl
-          isShwifty
+          ...CatContainer_cat
         }
       }
     }
