@@ -11,16 +11,7 @@ const AppQuery = graphql`
     viewer {
       id
       allCats(last: 3) {
-        edges {
-          cursor
-          node {
-            id
-            fullName
-            nickname
-            imageUrl
-            isShwifty
-          }
-        }
+        ...CatList_list
       }
     }
   }
@@ -34,7 +25,7 @@ const AppContainer = () => (
       if (error) {
         return <div>{error.message}</div>;
       } else if (props) {
-        return <App viewer={props.viewer} />;
+        return <App list={props.viewer.allCats} />;
       }
       return <div>Loading</div>;
     }}
