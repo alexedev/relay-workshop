@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 
 import CatContainer from './CatContainer';
 
+import get from 'lodash/get';
+
 class CatList extends PureComponent {
   loadMore = () => {
     // we will add pagination callback here
@@ -9,7 +11,7 @@ class CatList extends PureComponent {
   render() {
     return (
       <div>
-        {this.props.viewer.allCats.edges.map(({ cursor, node }) => (
+        {get(this.props, 'viewer.allCats.edges', []).map(({ cursor, node }) => (
           <CatContainer key={cursor} cat={node} />
         ))}
 
