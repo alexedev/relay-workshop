@@ -10,7 +10,7 @@ const AppQuery = graphql`
   query AppContainerQuery {
     viewer {
       id
-      allCats(last: 3) {
+      allCats(last: 3) @connection(key: "AppContainerQuery_allCats") {
         ...CatList_list
       }
     }
@@ -25,7 +25,7 @@ const AppContainer = () => (
       if (error) {
         return <div>{error.message}</div>;
       } else if (props) {
-        return <App list={props.viewer.allCats} />;
+        return <App list={props.viewer.allCats} viewerId={props.viewer.id} />;
       }
       return <div>Loading</div>;
     }}

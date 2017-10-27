@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 
 import CreateForm from './CreateForm';
 
+import createCat from '../mutations/createCat';
+
 class CreateFormContainer extends PureComponent {
   constructor(props) {
     super(props);
@@ -14,7 +16,8 @@ class CreateFormContainer extends PureComponent {
     });
   };
   handleCreate = e => {
-    // here we will add our create mutation later
+    const { fullName, nickname, imageUrl } = this.state;
+    createCat(this.props.viewerId, { fullName, nickname, imageUrl });
     this.setState({ fullName: '', nickname: '', imageUrl: '' });
     e.preventDefault();
   };
