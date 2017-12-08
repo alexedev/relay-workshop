@@ -1,7 +1,7 @@
 type Cat implements Node {
   fullName: String
   id: ID!
-  imageUrl: String!
+  imageUrl: String
   isShwifty: Boolean
   nickname: String!
 }
@@ -214,14 +214,14 @@ enum CatOrderBy {
 
 input CreateCat {
   fullName: String
-  imageUrl: String!
+  imageUrl: String
   isShwifty: Boolean
   nickname: String!
 }
 
 input CreateCatInput {
   fullName: String
-  imageUrl: String!
+  imageUrl: String
   isShwifty: Boolean
   nickname: String!
   clientMutationId: String!
