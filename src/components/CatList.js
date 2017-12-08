@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+import { createFragmentContainer, graphql } from 'react-relay';
+
 import CatContainer from './CatContainer';
 
 import get from 'lodash/get';
@@ -26,4 +28,18 @@ class CatList extends PureComponent {
   }
 }
 
-export default CatList;
+export default createFragmentContainer(
+  CatList,
+  graphql`
+    fragment CatList_viewer on Viewer {
+      allCats(first: $count) {
+        edges {
+          cursor
+          node {
+            ...CatContainer_cat
+          }
+        }
+      }
+    }
+  `
+);
